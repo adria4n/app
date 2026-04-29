@@ -1,22 +1,37 @@
 [
  {
  "nombre": "TV",
- "logo": "https://app.evolutiontv.mx//android/assets/section_live_tv_esp.png",
+ "logo": "https://www.skymas.mx/images/repository/268/19626268-SNAPSHOT-l.jpg",
  "go": "tv"
  },
  {
  "nombre": "TV 2",
- "logo": "https://app.evolutiontv.mx//android/assets/section_live_tv_esp.png",
+ "logo": "https://ae-pic-a1.aliexpress-media.com/kf/Aec32a9086aa34dcd8fd05efae2d464afZ.png",
  "go": "tv2"
  },
  {
  "nombre": "TV Usa",
- "logo": "https://app.evolutiontv.mx//android/assets/section_live_tv.png",
+ "logo": "https://www.skymas.mx/images/repository/269/19626269-SNAPSHOT-l.jpg",
  "go": "tvusa"
  },
  {
  "nombre": "Realitys",
- "logo": "https://app.evolutiontv.mx//android/assets/section_concerts.png",
+ "logo": "https://www.skymas.mx/images/repository/269/19626269-SNAPSHOT-l.jpg",
  "go": "realitys"
+ },
+ {
+ "nombre": "Test",
+ "logo": "https://www.skymas.mx/images/repository/562/19669562-SNAPSHOT-l.jpg",
+ "go": "test"
+ },
+ {
+ "nombre": "Test",
+ "logo": "https://www.skymas.mx/images/repository/515/17125515-SNAPSHOT-l.jpg",
+ "go": "test"
+ },
+ {
+ "nombre": "Test",
+ "logo": "https://www.skymas.mx/images/repository/682/19669682-SNAPSHOT-l.jpg",
+ "go": "test"
  }
 ]
