@@ -11,27 +11,17 @@
  },
  {
  "nombre": "TV Usa",
- "logo": "https://www.skymas.mx/images/repository/269/19626269-SNAPSHOT-l.jpg",
+ "logo": "https://ae-pic-a1.aliexpress-media.com/kf/A6aad289edfe04ea292273f374a47a9e02.jpg",
  "go": "tvusa"
  },
  {
  "nombre": "Realitys",
- "logo": "https://www.skymas.mx/images/repository/269/19626269-SNAPSHOT-l.jpg",
+ "logo": "https://ae-pic-a1.aliexpress-media.com/kf/A8f2487268ce146b5afa7e1b0779b98d3q.png",
  "go": "realitys"
  },
  {
  "nombre": "Test",
- "logo": "https://www.skymas.mx/images/repository/562/19669562-SNAPSHOT-l.jpg",
- "go": "test"
- },
- {
- "nombre": "Test",
  "logo": "https://www.skymas.mx/images/repository/515/17125515-SNAPSHOT-l.jpg",
- "go": "test"
- },
- {
- "nombre": "Test",
- "logo": "https://www.skymas.mx/images/repository/682/19669682-SNAPSHOT-l.jpg",
  "go": "test"
  }
 ]
