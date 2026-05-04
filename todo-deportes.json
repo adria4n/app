@@ -1,16 +1,16 @@
 [
  {
- "nombre": "TUDN",
+ "nombre": "Azteca uno",
  "logo": "https://ae-pic-a1.aliexpress-media.com/kf/A10cfeab9c1b04d009f3b3d249713115dC.png",
- "link": "https://embed.ksdjugfsddeports.com/embed2/tudn.html"
+ "link": "http://201.151.118.136:8000/play/a00h/index.m3u8?hls"
  },
  {
- "nombre": "TNT Sports",
+ "nombre": "Las Estrellas",
  "logo": "https://ae-pic-a1.aliexpress-media.com/kf/Aec32a9086aa34dcd8fd05efae2d464afZ.png",
- "link": "https://embed.ksdjugfsddeports.com/embed2/tntsports.html"
+ "link": "http://38.194.226.190:8000/play/a01j/index.m3u8?hls"
  },
  {
- "nombre": "ESPN Premium LAT",
+ "nombre": "test",
  "logo": "https://ae-pic-a1.aliexpress-media.com/kf/Aec32a9086aa34dcd8fd05efae2d464afZ.png",
  "link": "https://embed.ksdjugfsddeports.com/embed2/espnpremium.html"
  }
