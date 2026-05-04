@@ -62,5 +62,20 @@
  "nombre": "Telemundo",
  "logo": "https://www.izzigo.tv/images/repository/830/256830-LOGO-m.png",
  "link": "http://38.194.226.190:8000/play/a012/index.m3u8?hls"
+ },
+ {
+ "nombre": "Star Channel",
+ "logo": "https://www.izzigo.tv/images/repository/611/9845611-LOGO-m.png",
+ "link": "http://38.194.226.190:8000/play/a01n/index.m3u8?hls"
+ },
+ {
+ "nombre": "Warner",
+ "logo": "https://www.izzigo.tv/images/repository/638/19726638-LOGO-m.png",
+ "link": "http://45.189.151.7:8000/play/a06z/index.m3u8?hls"
+ },
+ {
+ "nombre": "Sony Channel",
+ "logo": "https://www.izzigo.tv/images/repository/176/14837176-LOGO-m.png",
+ "link": "http://38.194.226.190:8000/play/a01b/index.m3u8?hls"
  }
 ]
