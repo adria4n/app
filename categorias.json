@@ -20,8 +20,13 @@
  "go": "realitys"
  },
  {
- "nombre": "Test",
- "logo": "https://www.skymas.mx/images/repository/515/17125515-SNAPSHOT-l.jpg",
+ "nombre": "AZTECA UNO",
+ "logo": "https://ae-pic-a1.aliexpress-media.com/kf/A41b7ea91b8544e09a94e54250168f358G.jpg",
+ "go": "test"
+ },
+ {
+ "nombre": "ADN 40",
+ "logo": "https://ae-pic-a1.aliexpress-media.com/kf/A41b7ea91b8544e09a94e54250168f358G.jpg",
  "go": "test"
  }
 ]
