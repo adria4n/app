@@ -1,5 +1,8 @@
 [
  {
+ "categoria": "Canales Nacionales 🇲🇽"
+ },
+ {
  "nombre": "Azteca uno",
  "logo": "https://www.izzigo.tv/images/repository/725/16975725-LOGO-m.png",
  "link": "http://38.194.226.190:8000/play/a01e/index.m3u8?hls"
@@ -23,5 +26,10 @@
  "nombre": "Canal 5",
  "logo": "https://ae-pic-a1.aliexpress-media.com/kf/Aec32a9086aa34dcd8fd05efae2d464afZ.png",
  "link": "http://38.194.226.190:8000/play/a02e/index.m3u8?hls"
+ },
+ {
+ "nombre": "Canal 6 Pop Corn Central",
+ "logo": "https://ae-pic-a1.aliexpress-media.com/kf/Aec32a9086aa34dcd8fd05efae2d464afZ.png",
+ "link": "http://38.194.226.190:8000/play/a00n/index.m3u8?hls"
  }
 ]
