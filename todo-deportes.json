@@ -28,7 +28,7 @@
  "link": "http://38.194.226.190:8000/play/a02e/index.m3u8?hls"
  },
  {
- "nombre": "Canal 6 Pop Corn Central",
+ "nombre": "Canal 6",
  "logo": "https://www.izzigo.tv/images/repository/157/16975157-LOGO-m.png",
  "link": "http://38.194.226.190:8000/play/a00n/index.m3u8?hls"
  },
@@ -44,5 +44,23 @@
  "nombre": "Milenio TV",
  "logo": "https://www.izzigo.tv/images/repository/121/9250121-LOGO-m.png",
  "link": "http://38.194.226.190:8000/play/a009/index.m3u8?hls"
+ },
+ {
+ "categoria": "Entretenimiento"
+ },
+ {
+ "nombre": Unicable",
+ "logo": "https://www.izzigo.tv/images/repository/469/12154469-LOGO-m.png",
+ "link": "http://201.151.118.136:8000/play/a00j/index.m3u8?hls"
+ },
+ {
+ "nombre": TL Novelas",
+ "logo": "https://www.izzigo.tv/images/repository/240/8526240-LOGO-m.png",
+ "link": "http://201.151.118.136:8000/play/a00f/index.m3u8?hls"
+ },
+ {
+ "nombre": Telemundo",
+ "logo": "https://www.izzigo.tv/images/repository/830/256830-LOGO-m.png",
+ "link": "http://38.194.226.190:8000/play/a012/index.m3u8?hls"
  }
 ]
