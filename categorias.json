@@ -1,11 +1,11 @@
 [
  {
- "nombre": "TV",
+ "nombre": "",
  "logo": "https://www.izzigo.tv/images/repository/156/19741156-SNAPSHOT-l.jpg",
  "go": "tv"
  },
  {
- "nombre": "TV 2",
+ "nombre": "2",
  "logo": "https://www.izzigo.tv/images/repository/156/19741156-SNAPSHOT-l.jpg",
  "go": "tv2"
  },
