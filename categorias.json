@@ -18,5 +18,10 @@
  "nombre": "Realitys",
  "logo": "https://ae-pic-a1.aliexpress-media.com/kf/A8f2487268ce146b5afa7e1b0779b98d3q.png",
  "go": "realitys"
+ },
+ {
+ "nombre": "TEST TDT",
+ "logo": "https://ae-pic-a1.aliexpress-media.com/kf/A8f2487268ce146b5afa7e1b0779b98d3q.pg",
+ "go": "test"
  }
 ]
