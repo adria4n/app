@@ -18,6 +18,7 @@
                 "headers": {
                     "Origin": "https://www.izzigo.tv/",
                     "Referer": "https://www.izzigo.tv/"
+               }
             },
             {
                 "name": "🇵🇾 Evento 2",
