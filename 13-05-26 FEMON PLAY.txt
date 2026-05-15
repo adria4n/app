@@ -1,4 +1,14 @@
 [
+    {
+        "name": "📺  EVENTOS EXCLUSIVOS",
+        "samples": [
+            {
+                "name": "🇵🇾 Evento 1",
+                "url": "ZBjPLOQj+qWX7ZXjfZz/8c4UbJSTsAmLuv1Km7jhCz3RheXQeEwuL6xK8NAFO5CClBqs+PW5w5cT8phXDymfIZfzWCyIsN3oG6laz96OWZ9jiQ3OwjuvkUdInvcLBAhH",
+                "type": "CLEARKEY",
+                "icono": "https://app.femon.net/tv/banners/6a0340f6f41dc9.20003867.png",
+                "drm_license_uri": ""
+            },
 {
                 "name": "test",
                 "url": "https://cdmx-live1-ott.izzigo.tv/out/u/dash/CDMX1/AZTECA-UNO-HD/default.mpd",
@@ -9,16 +19,6 @@
                     "Origin": "https://www.izzigo.tv/",
                     "Referer": "https://www.izzigo.tv/"
                 }
-            },
-    {
-        "name": "📺  EVENTOS EXCLUSIVOS",
-        "samples": [
-            {
-                "name": "🇵🇾 Evento 1",
-                "url": "ZBjPLOQj+qWX7ZXjfZz/8c4UbJSTsAmLuv1Km7jhCz3RheXQeEwuL6xK8NAFO5CClBqs+PW5w5cT8phXDymfIZfzWCyIsN3oG6laz96OWZ9jiQ3OwjuvkUdInvcLBAhH",
-                "type": "CLEARKEY",
-                "icono": "https://app.femon.net/tv/banners/6a0340f6f41dc9.20003867.png",
-                "drm_license_uri": ""
             },
             {
                 "name": "🇵🇾 Evento 2",
