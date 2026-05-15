@@ -16,7 +16,7 @@
                 "icono": "https://banners.femon.net/banners/6978b528178fe5.93382481.png",
                 "drm_license_uri": "https://m3ukodi.com/php/clearkey_hextobase64/results.php?keyid%5B%5D=6c01435ed4e839996f40f8ee08965324&key%5B%5D=74eb7b54510e463ea51dccff80a53f3e",
                 "headers": {
-                    "Origin": "https://www.izzigo.tv/",
+                    "Origin": "https://www.izzigo.tv",
                     "Referer": "https://www.izzigo.tv/"
                }
             },
