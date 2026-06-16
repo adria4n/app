@@ -1,6 +1,12 @@
 [
- {
- "usuario": "Juanflores67",
- "contraseña": "Pw9C9jgEnNfe"
- }
+  {
+    "usuario": "Juanflores67",
+    "contraseña": "Pw9C9jgEnNfe",
+    "vencimiento": "16/06"
+  },
+  {
+    "usuario": "adrian",
+    "contraseña": "adrin",
+    "vencimiento": "16/06"
+  }
 ]
