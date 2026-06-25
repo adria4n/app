@@ -1,84 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reproductor JW ClearKey</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reproductor JW ClearKey</title>
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background-color: black;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-    }
-    #player {
-      width: 100%;
-      height: 100%;
-    }
-  </style>
+<style>
+html,body{
+margin:0;
+padding:0;
+background:#000;
+width:100%;
+height:100%;
+overflow:hidden;
+}
+#player{
+width:100%;
+height:100%;
+}
+</style>
 
-  <script src="https://ssl.p.jwpcdn.com/player/v/8.26.4/jwplayer.js"></script>
-  <script>
-    // Clave pública de JWPlayer (de ejemplo, puedes usar esta)
-    jwplayer.key = "XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo";
-  </script>
+<script src="https://ssl.p.jwpcdn.com/player/v/8.26.4/jwplayer.js"></script>
+<script>
+jwplayer.key="XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo";
+</script>
 </head>
 <body>
-  <div id="player"></div>
 
-  <script>
-    // --- 1️⃣ Leer parámetros de la URL ---
-    const params = new URLSearchParams(location.search);
-    const url = params.get("url");
-    const keyId = params.get("id");
-    const key = params.get("k");
+<div id="player"></div>
 
-    if (!url || !keyId || !key) {
-      document.body.innerHTML = "<h3 style='color:white;text-align:center;margin-top:40vh'>⚠️ Faltan parámetros: ?url=&id=&k=</h3>";
-      throw new Error("Faltan parámetros.");
-    }
+<script>
+const params=new URLSearchParams(location.search);
+const url=params.get("url");
+const keyId=params.get("id");
+const key=params.get("k");
 
-    // --- 2️⃣ Crear el reproductor ---
-    const playerInstance = jwplayer("player");
+jwplayer("player").setup({
+playlist:[{
+sources:[{
+type:"dash",
+file:url,
+drm:{
+clearkey:{
+keyId:keyId,
+key:key
+}
+},
+label:"Auto"
+}]
+}],
+width:"100%",
+height:"100%",
+stretching:"fit",
+autostart:true,
+mute:false,
+controls:true,
+skin:{
+name:"glow"
+},
+logo:{
+file:"",
+position:"top-right"
+}
+});
+</script>
 
-    playerInstance.setup({
-      playlist: [{
-        title: "Canal en vivo",
-        description: "Reproduciendo...",
-        sources: [{
-          type: "dash",
-          file: url,
-          drm: {
-            clearkey: {
-              keyId: keyId,
-              key: key
-            }
-          },
-          label: "Auto"
-        }]
-      }],
-      width: "100%",
-      height: "100%",
-      stretching: "fit",
-      autostart: true,
-      mute: false,
-      controls: true,
-      skin: {
-        name: "glow" // Puedes usar: seven, six, five, roundster, bekle, vapor, glow
-      },
-      logo: {
-        file: "", // puedes poner aquí tu logo si quieres
-        position: "top-right"
-      }
-    });
-
-    // --- 3️⃣ Opcional: mostrar errores si algo falla ---
-    playerInstance.on('error', function(e) {
-      console.error("❌ Error:", e.message);
-    });
-  </script>
 </body>
 </html>
