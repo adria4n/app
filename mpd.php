@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.16.3/shaka-player.compiled.js"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#000;overflow:hidden;height:100vh}
+        video{width:100vw;height:100vh;object-fit:contain;background:#000}
+    </style>
+</head>
+<body>
+    <video id="video" autoplay controls playsinline></video>
+
+    <script>
+        shaka.polyfill.installAll();
+
+        const params = new URLSearchParams(window.location.search);
+
+        const manifestUri = params.get('url');
+        const key = params.get('key');
+
+        const video = document.getElementById('video');
+        const player = new shaka.Player(video);
+
+        async function obtenerKid(url){
+            const res = await fetch(url);
+            const mpd = await res.text();
+
+            const match =
+                mpd.match(/default_KID="([^"]+)"/i) ||
+                mpd.match(/cenc:default_KID="([^"]+)"/i);
+
+            if(!match) return null;
+
+            return match[1].replace(/-/g,'').toLowerCase();
+        }
+
+        async function iniciar(){
+            const kid = await obtenerKid(manifestUri);
+
+            player.configure({
+                drm:{
+                    clearKeys:{
+                        [kid]: key
+                    }
+                }
+            });
+
+            await player.load(manifestUri);
+
+            video.volume = 1;
+            video.muted = false;
+            video.play();
+        }
+
+        iniciar();
+
+        window.addEventListener('beforeunload',()=>player.destroy());
+    </script>
+</body>
+</html>
