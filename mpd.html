@@ -4,61 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reproductor</title>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.16.3/shaka-player.compiled.js"></script>
+
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#000;overflow:hidden;height:100vh}
-        video{width:100vw;height:100vh;object-fit:contain;background:#000}
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            background:#000;
+            overflow:hidden;
+            height:100vh;
+        }
+
+        video{
+            width:100vw;
+            height:100vh;
+            object-fit:contain;
+            background:#000;
+        }
     </style>
 </head>
 <body>
-    <video id="video" autoplay controls playsinline></video>
 
-    <script>
-        shaka.polyfill.installAll();
+<video id="video" autoplay controls playsinline></video>
 
-        const params = new URLSearchParams(window.location.search);
+<script>
+shaka.polyfill.installAll();
 
-        const manifestUri = params.get('url');
-        const key = params.get('key');
+const params = new URLSearchParams(window.location.search);
 
-        const video = document.getElementById('video');
-        const player = new shaka.Player(video);
+const manifestUri = params.get('url');
+const kidParam = params.get('kid');
+const key = params.get('key');
 
-        async function obtenerKid(url){
-            const res = await fetch(url);
-            const mpd = await res.text();
+const video = document.getElementById('video');
+const player = new shaka.Player(video);
 
-            const match =
-                mpd.match(/default_KID="([^"]+)"/i) ||
-                mpd.match(/cenc:default_KID="([^"]+)"/i);
+async function obtenerKid(url){
+    try{
+        const res = await fetch(url);
+        const mpd = await res.text();
 
-            if(!match) return null;
+        const match =
+            mpd.match(/default_KID="([^"]+)"/i) ||
+            mpd.match(/cenc:default_KID="([^"]+)"/i);
 
-            return match[1].replace(/-/g,'').toLowerCase();
+        if(!match) return null;
+
+        return match[1].replace(/-/g,'').toLowerCase();
+    }catch(e){
+        return null;
+    }
+}
+
+async function iniciar(){
+
+    if(!manifestUri){
+        return;
+    }
+
+    let kid = kidParam;
+
+    if(!kid){
+        kid = await obtenerKid(manifestUri);
+    }
+
+    if(!kid || !key){
+        return;
+    }
+
+    player.configure({
+        drm:{
+            clearKeys:{
+                [kid]: key
+            }
         }
+    });
 
-        async function iniciar(){
-            const kid = await obtenerKid(manifestUri);
+    await player.load(manifestUri);
 
-            player.configure({
-                drm:{
-                    clearKeys:{
-                        [kid]: key
-                    }
-                }
-            });
+    video.volume = 1;
+    video.muted = false;
 
-            await player.load(manifestUri);
+    try{
+        await video.play();
+    }catch(e){}
+}
 
-            video.volume = 1;
-            video.muted = false;
-            video.play();
-        }
+iniciar();
 
-        iniciar();
+window.addEventListener('beforeunload', () => {
+    player.destroy();
+});
+</script>
 
-        window.addEventListener('beforeunload',()=>player.destroy());
-    </script>
 </body>
 </html>
