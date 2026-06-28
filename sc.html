@@ -9,15 +9,15 @@
     <script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
     <style>
         body, html { margin: 0; padding: 0; height: 100%; width: 100%; background: #000; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
-        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #000; z-index: 1000; }
+        #loader { position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #000; z-index: 1000; }
         .loading-bars { display: flex; align-items: flex-end; gap: 5px; height: 40px; }
         .bar { width: 6px; height: 10px; background: #e50914; border-radius: 3px; animation: grow 1s ease-in-out infinite; }
-        .bar:nth-child(2) { animation-delay: 0.1s; }
-        .bar:nth-child(3) { animation-delay: 0.2s; }
-        .bar:nth-child(4) { animation-delay: 0.3s; }
-        .bar:nth-child(5) { animation-delay: 0.4s; }
-        @keyframes grow { 0%, 100% { height: 10px; opacity: 0.4; } 50% { height: 40px; opacity: 1; } }
-        .text { margin-top: 25px; color: #fff; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; text-align: center; padding: 0 16px; }
+        .bar:nth-child(2) { animation-delay: .1s; }
+        .bar:nth-child(3) { animation-delay: .2s; }
+        .bar:nth-child(4) { animation-delay: .3s; }
+        .bar:nth-child(5) { animation-delay: .4s; }
+        @keyframes grow { 0%, 100% { height: 10px; opacity: .4; } 50% { height: 40px; opacity: 1; } }
+        .text { margin-top: 25px; color: #fff; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; text-align: center; padding: 0 16px; max-width: 90vw; word-break: break-word; }
         .error-msg { color: #ff4d4d; font-weight: bold; }
         #container { width: 100%; height: 100%; display: none; }
         .video-js { width: 100% !important; height: 100% !important; }
@@ -36,34 +36,35 @@
 
     <script>
     (function () {
-        /** Cambia solo si el PHP vive en otra ruta */
-        const PROXY_ENDPOINT = window.location.pathname || '/proxy.php';
+        /** Proxy real (NO uses window.location.pathname si el HTML está en GitHub Pages) */
+        const PROXY_URL = 'https://wetflixoficial.com/proxy.php';
 
-        function isProbablyBase64(str) {
-            return /^[A-Za-z0-9+/=_-]+$/.test(str) && !/^https?:\/\//i.test(str);
+        function getPageParam() {
+            const qs = window.location.search.slice(1);
+            if (!qs) return null;
+            const m = qs.match(/^(?:url|pagina)=([\s\S]*)$/i);
+            if (m) return decodeURIComponent(m[1].replace(/\+/g, ' '));
+            const p = new URLSearchParams(qs);
+            return p.get('url') || p.get('pagina');
         }
 
         function decodePageParam(raw) {
             if (!raw) return null;
-            const trimmed = raw.trim();
-            if (/^https?:\/\//i.test(trimmed)) {
-                return trimmed;
-            }
-            if (isProbablyBase64(trimmed)) {
-                try {
-                    const normalized = trimmed.replace(/-/g, '+').replace(/_/g, '/');
-                    const decoded = atob(normalized);
-                    if (/^https?:\/\//i.test(decoded)) return decoded;
-                } catch (e) { /* sigue como payload crudo */ }
-            }
-            return trimmed;
+            const t = raw.trim();
+            if (/^https?:\/\//i.test(t)) return t;
+            try {
+                const n = t.replace(/-/g, '+').replace(/_/g, '/');
+                const d = atob(n);
+                if (/^https?:\/\//i.test(d)) return d;
+            } catch (e) {}
+            return t;
         }
 
         function buildFetchUrl(pageUrl) {
             const q = new URLSearchParams();
             q.set('action', 'fetch');
             q.set('url', pageUrl);
-            return PROXY_ENDPOINT + '?' + q.toString();
+            return PROXY_URL + '?' + q.toString();
         }
 
         function showError(msg) {
@@ -74,41 +75,45 @@
             const player = videojs('my-player');
             player.src({ src: streamUrl, type: 'application/x-mpegURL' });
             player.ready(function () {
-                const show = function () {
-                    $('#loader').fadeOut(400, function () { $('#container').fadeIn(200); });
-                };
+                const show = () => $('#loader').fadeOut(400, () => $('#container').fadeIn(200));
                 player.play().then(show).catch(show);
             });
         }
 
         $(function () {
-            const params = new URLSearchParams(window.location.search);
-            const rawUrl = params.get('url') || params.get('pagina');
-
+            const rawUrl = getPageParam();
             if (!rawUrl) {
-                showError('ERROR: FALTA ?url=PAGINA');
+                showError('ERROR: USA ?url=' + encodeURIComponent('https://tvhd2.com/canales.php?stream=CANAL'));
                 return;
             }
 
             const pageUrl = decodePageParam(rawUrl);
+            const apiUrl = buildFetchUrl(pageUrl);
 
             $.ajax({
-                url: buildFetchUrl(pageUrl),
+                url: apiUrl,
                 type: 'GET',
                 dataType: 'json',
+                timeout: 30000,
                 success: function (res) {
-                    if (res.status === 'success' && res.url) {
+                    if (res && res.status === 'success' && res.url) {
                         startPlayer(res.url);
                     } else {
-                        showError('ERROR: ' + (res.message || 'SIN SEÑAL'));
+                        showError('ERROR: ' + (res && res.message ? res.message : 'SIN SEÑAL'));
                     }
                 },
-                error: function () {
-                    showError('ERROR DE CONEXIÓN');
+                error: function (xhr, status) {
+                    if (status === 'parsererror') {
+                        showError('ERROR: EL PROXY NO DEVOLVIÓ JSON (revisa action=fetch)');
+                    } else if (xhr.status === 0) {
+                        showError('ERROR CORS: EL PROXY DEBE PERMITIR TU DOMINIO (github.io)');
+                    } else {
+                        showError('ERROR DE CONEXIÓN (' + (xhr.status || status) + ')');
+                    }
                 }
             });
         });
     })();
     </script>
 </body>
-  </html>
+</html>
