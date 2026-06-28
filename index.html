@@ -28,12 +28,15 @@
 
     <script>
         const params = new URLSearchParams(location.search);
+        
         const url = params.get("url");
-        const keyId = params.get("kid");   // Cambiado de "id" a "kid"
-        const key = params.get("key");     // Cambiado de "k" a "key"
+        const kid = params.get("kid");
+        const contentKey = params.get("key");        // ← Renombrada para evitar conflicto
+
+        const BITMOVIN_LICENSE_KEY = "7d215c81-504c-4a3d-b870-f8180f2ce68a";  // Tu clave de Bitmovin
 
         const playerConfig = {
-            key: "7d215c81-504c-4a3d-b870-f8180f2ce68a",
+            key: BITMOVIN_LICENSE_KEY,   // Esta es la licencia de Bitmovin
             playback: {
                 autoplay: true,
                 muted: false
@@ -47,13 +50,15 @@
             dash: url,
             drm: {
                 clearkey: [{
-                    key: key,
-                    kid: keyId
+                    kid: kid,
+                    key: contentKey     // ← Esta es la clave del contenido
                 }]
             }
         };
 
-        player.load(sourceConfig);
+        player.load(sourceConfig).catch(err => {
+            console.error("Error al cargar:", err);
+        });
     </script>
 
 </body>
