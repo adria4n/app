@@ -5,23 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reproductor Bitmovin ClearKey</title>
 
+<link rel="stylesheet" href="https://cdn.bitmovin.com/player/web/8/bitmovinplayer.css">
+
 <style>
-html, body {
-    margin: 0;
-    padding: 0;
-    background: #000;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-#player {
-    width: 100%;
-    height: 100%;
-}
+    html, body {
+        margin: 0;
+        padding: 0;
+        background: #000;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    #player {
+        width: 100%;
+        height: 100%;
+    }
 </style>
 
-<!-- Bitmovin Player -->
 <script src="https://cdn.bitmovin.com/player/web/8/bitmovinplayer.js"></script>
+
+<script>
+(function () {
+  var fakeLicense = 'data:text/plain;charset=utf-8;base64,eyJzdGF0dXMiOiJncmFudGVkIiwibWVzc2FnZSI6IlRoZXJlIHlvdSBnby4ifQ==';
+  var originalOpen = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function () {
+    if (arguments[1] && arguments[1].indexOf('licensing.bitmovin.com') > -1) {
+      arguments[1] = fakeLicense;
+    }
+    return originalOpen.apply(this, arguments);
+  };
+})();
+</script>
 </head>
 <body>
 
@@ -33,30 +47,20 @@ const url = params.get("url");
 const keyId = params.get("id");
 const key = params.get("k");
 
-// Tu clave de licencia de Bitmovin
-const playerKey = "c275421b-860d-4361-b2a6-0d92c945e2f3";
-
-if (!url || !keyId || !key) {
-    console.error("Faltan parámetros: url, id o k");
-}
-
-// Configuración del reproductor
 const playerConfig = {
-    key: playerKey,
+    key: "c275421b-860d-4361-b2a6-0d92c945e2f3",
     playback: {
         autoplay: true,
         muted: false
     },
     ui: {
-        // Puedes personalizar la UI si quieres
+        enable: true
     }
 };
 
-// Crear el reproductor
 const container = document.getElementById('player');
 const player = new bitmovin.player.Player(container, playerConfig);
 
-// Configuración de la fuente con ClearKey
 const sourceConfig = {
     dash: url,
     drm: {
@@ -67,12 +71,7 @@ const sourceConfig = {
     }
 };
 
-// Cargar la fuente
-player.load(sourceConfig).then(() => {
-    console.log("Reproducción iniciada correctamente");
-}).catch(error => {
-    console.error("Error al cargar el video:", error);
-});
+player.load(sourceConfig);
 </script>
 
 </body>
