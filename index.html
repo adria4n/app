@@ -1,78 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reproductor Bitmovin ClearKey</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor Bitmovin ClearKey</title>
 
-<link rel="stylesheet" href="https://cdn.bitmovin.com/player/web/8/bitmovinplayer.css">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        #my-player {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 
-<style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        background: #000;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-    #player {
-        width: 100%;
-        height: 100%;
-    }
-</style>
-
-<script src="https://cdn.bitmovin.com/player/web/8/bitmovinplayer.js"></script>
-
-<script>
-(function () {
-  var fakeLicense = 'data:text/plain;charset=utf-8;base64,eyJzdGF0dXMiOiJncmFudGVkIiwibWVzc2FnZSI6IlRoZXJlIHlvdSBnby4ifQ==';
-  var originalOpen = XMLHttpRequest.prototype.open;
-  XMLHttpRequest.prototype.open = function () {
-    if (arguments[1] && arguments[1].indexOf('licensing.bitmovin.com') > -1) {
-      arguments[1] = fakeLicense;
-    }
-    return originalOpen.apply(this, arguments);
-  };
-})();
-</script>
+    <!-- Bitmovin Player -->
+    <script src="https://cdn.bitmovin.com/player/web/8/bitmovinplayer.js" type="text/javascript"></script>
 </head>
 <body>
 
-<div id="player"></div>
+    <!-- Player container -->
+    <div id="my-player"></div>
 
-<script>
-const params = new URLSearchParams(location.search);
-const url = params.get("url");
-const keyId = params.get("id");
-const key = params.get("k");
+    <script>
+        // Leer parámetros de la URL (igual que en tu reproductor JW)
+        const params = new URLSearchParams(location.search);
+        const url = params.get("url");
+        const keyId = params.get("id");   // KID
+        const key = params.get("k");      // KEY
 
-const playerConfig = {
-    key: "c275421b-860d-4361-b2a6-0d92c945e2f3",
-    playback: {
-        autoplay: true,
-        muted: false
-    },
-    ui: {
-        enable: true
-    }
-};
+        if (!url) {
+            console.error("Falta el parámetro 'url' en la query string");
+        }
 
-const container = document.getElementById('player');
-const player = new bitmovin.player.Player(container, playerConfig);
+        // Configuración del reproductor
+        const playerConfig = {
+            key: "7d215c81-504c-4a3d-b870-f8180f2ce68a",
+            playback: {
+                autoplay: true,
+                muted: false
+            },
+            ui: {
+                skin: 'default' // Puedes personalizar más si lo deseas
+            }
+        };
 
-const sourceConfig = {
-    dash: url,
-    drm: {
-        clearkey: [{
-            kid: keyId,
-            key: key
-        }]
-    }
-};
+        // Crear instancia del reproductor
+        const playerContainer = document.getElementById('my-player');
+        const player = new bitmovin.player.Player(playerContainer, playerConfig);
 
-player.load(sourceConfig);
-</script>
+        // Configuración de la fuente con ClearKey
+        let sourceConfig = {
+            dash: url,
+            drm: {
+                clearkey: [{
+                    key: key,
+                    kid: keyId
+                }]
+            }
+        };
+
+        // Cargar el contenido
+        player.load(sourceConfig).then(() => {
+            console.log("Video cargado correctamente con Bitmovin + ClearKey");
+        }).catch((error) => {
+            console.error("Error al cargar el video:", error);
+        });
+    </script>
 
 </body>
 </html>
