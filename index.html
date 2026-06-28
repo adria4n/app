@@ -4,55 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reproductor Bitmovin ClearKey</title>
+
     <style>
         html, body {
-            margin: 0; padding: 0; background: #000;
-            width: 100%; height: 100%; overflow: hidden;
+            margin: 0;
+            padding: 0;
+            background: #000;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
-        #my-player { width: 100%; height: 100%; }
+        #my-player {
+            width: 100%;
+            height: 100%;
+        }
     </style>
-    <script src="https://cdn.bitmovin.com/player/web/8/bitmovinplayer.js"></script>
+
+    <script src="https://cdn.bitmovin.com/player/web/8/bitmovinplayer.js" type="text/javascript"></script>
 </head>
 <body>
+
     <div id="my-player"></div>
 
     <script>
         const params = new URLSearchParams(location.search);
-        
-        const url   = params.get("url");
-        const kid   = params.get("kid");   // ← cambiado
-        const key   = params.get("key");   // ← cambiado
-
-        if (!url || !kid || !key) {
-            alert("Faltan parámetros en la URL: ?url=...&kid=...&key=...");
-            console.error("Parámetros faltantes:", {url, kid, key});
-        }
+        const url = params.get("url");
+        const keyId = params.get("id");
+        const key = params.get("k");
 
         const playerConfig = {
             key: "7d215c81-504c-4a3d-b870-f8180f2ce68a",
-            playback: { autoplay: true, muted: false }
+            playback: {
+                autoplay: true,
+                muted: false
+            }
         };
 
-        const player = new bitmovin.player.Player(document.getElementById('my-player'), playerConfig);
-
-        player.on(bitmovin.player.Event.Error, (e) => {
-            console.error("Bitmovin Error:", e);
-        });
+        const playerContainer = document.getElementById('my-player');
+        const player = new bitmovin.player.Player(playerContainer, playerConfig);
 
         const sourceConfig = {
             dash: url,
             drm: {
                 clearkey: [{
-                    kid: kid,   // Key ID
-                    key: key    // Content Key (ambos en hexadecimal)
+                    key: key,
+                    kid: keyId
                 }]
             }
         };
 
-        console.log("Cargando → URL:", url);
-        console.log("ClearKey → KID:", kid, "| KEY:", key);
-
         player.load(sourceConfig);
     </script>
+
 </body>
 </html>
