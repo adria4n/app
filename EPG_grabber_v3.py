@@ -411,7 +411,7 @@ myfile.write('</tv>\n')
 myfile.close()
 
 input_file = filename  # Replace with your input file
-output_file = 'myCablepg.xml.gz'  # Output file name
+output_file = 'myCablepg.json'  # Output file name
 gzip_file(input_file, output_file)
 
         #print(Evento['con']['oti']+": S"+ str(Evento['con']['sea']) + "E"+str(Evento['con']['scn']) +" "+ Evento['con']['loc'][0]['cti'])
