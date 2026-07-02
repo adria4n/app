@@ -1,76 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor Shaka Player ClearKey</title>
-
+    <title>Reproductor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.16.3/shaka-player.compiled.js"></script>
     <style>
-        html,
-        body {
+        * {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
+            box-sizing: border-box;
+        }
+        body {
             background: #000;
             overflow: hidden;
+            height: 100vh;
         }
-
         video {
-            width: 100%;
-            height: 100%;
-            background: #000;
+            width: 100vw;
+            height: 100vh;
             object-fit: contain;
+            background: #000;
         }
     </style>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.16.3/shaka-player.compiled.js"></script>
 </head>
-
 <body>
-
     <video id="video" autoplay controls playsinline></video>
-
     <script>
+        shaka.polyfill.installAll();
         const params = new URLSearchParams(window.location.search);
-
-        const url = params.get("url");
-        const kid = params.get("kid");
-        const key = params.get("key");
-
-        async function initPlayer() {
-            shaka.polyfill.installAll();
-
-            if (!shaka.Player.isBrowserSupported()) {
-                return;
-            }
-
-            const video = document.getElementById("video");
-            video.autoplay = true;
-            video.muted = false;
-
-            const player = new shaka.Player(video);
-
-            player.configure({
-                drm: {
-                    clearKeys: (kid && key) ? {
-                        [kid]: key
-                    } : {}
-                }
-            });
-
-            try {
-                await player.load(url);
-                await video.play().catch(() => {});
-            } catch (error) {
-                console.error(error);
-            }
+        const manifestUri = params.get('url');
+        const kid = (params.get('kid') || '').replace(/-/g, '').toLowerCase();
+        const key = (params.get('key') || '').replace(/-/g, '').toLowerCase();
+        const video = document.getElementById('video');
+        video.volume = 1.0;
+        video.muted = false;
+        const player = new shaka.Player(video);
+        const drmConfig = { clearKeys: {} };
+        if (kid && key) {
+            drmConfig.clearKeys[kid] = key;
         }
-
-        initPlayer();
+        player.configure({ drm: drmConfig });
+        player.load(manifestUri).then(() => {
+            video.muted = false;
+            video.volume = 1.0;
+            video.play();
+        });
+        window.addEventListener('beforeunload', () => {
+            player.destroy();
+        });
     </script>
-
 </body>
-
 </html>
