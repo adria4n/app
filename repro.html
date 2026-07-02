@@ -22,12 +22,19 @@
             object-fit: contain;
             background: #000;
         }
+        video::-webkit-media-text-track-container,
+        video::cue {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
     <video id="video" autoplay controls playsinline></video>
     <script>
         shaka.polyfill.installAll();
+        if (shaka.log) {
+            shaka.log.setLevel(shaka.log.Level.NONE);
+        }
         const params = new URLSearchParams(window.location.search);
         const manifestUri = params.get('url');
         const kid = (params.get('kid') || '').replace(/-/g, '').toLowerCase();
@@ -36,6 +43,7 @@
         video.volume = 1.0;
         video.muted = false;
         const player = new shaka.Player(video);
+        player.addEventListener('error', () => {});
         const drmConfig = { clearKeys: {} };
         if (kid && key) {
             drmConfig.clearKeys[kid] = key;
