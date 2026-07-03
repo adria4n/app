@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:cenc="urn:mpeg:cenc:2013"
+     xsi:schemaLocation="urn:mpeg:dash:schema:mpd:2011 DASH-MPD.xsd"
+     profiles="urn:mpeg:dash:profile:isoff-live:2011"
+     type="dynamic"
+     availabilityStartTime="1970-01-01T00:00:00Z"
+     minimumUpdatePeriod="PT2S"
+     minBufferTime="PT6S"
+     timeShiftBufferDepth="PT1M0S"
+     suggestedPresentationDelay="PT6S"
+     maxSegmentDuration="PT2S">
+  <BaseURL>https://live1-ott.izzigo.tv/13/out/u/dash/LIFETIME-HD/default.mpd</BaseURL>
+  <Location>https://live1-ott.izzigo.tv/13/out/u/dash/LIFETIME-HD/default.mpd</Location>
+  <Period id="0" start="PT0S">
+    <AdaptationSet frameRate="30000/1001" mimeType="video/mp4" startWithSAP="1" id="3" group="2" contentType="video" par="16:9" segmentAlignment="true">
+      <ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc" cenc:default_KID="6561801b-75ab-2581-9fc7-ede365375df7"/>
+      <ContentProtection schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95" value="Microsoft PlayReady"/>
+      <ContentProtection schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed" value="Widevine Content Protection"/>
+      <Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"/>
+      <SegmentTemplate timescale="30000" media="LIFETIME-HD-\( RepresentationID \)-scale=30000-p=\( Period.id \)-\( Time \).mp4" initialization="LIFETIME-HD-\( RepresentationID \)-scale=30000-p=\( Period.id \)-init.mp4"/>
+      <Representation width="640" height="360" codecs="avc1.4d4028" id="avc1_1500000=3763837693" bandwidth="1500000"/>
+      <Representation width="960" height="540" codecs="avc1.4d4028" id="avc1_2500000=3686818281" bandwidth="2500000"/>
+      <Representation width="1280" height="720" codecs="avc1.640028" id="avc1_3500000=4056436628" bandwidth="3500000"/>
+      <Representation width="1920" height="1080" codecs="avc1.640028" id="avc1_6000000=2641593535" bandwidth="6000000"/>
+      <Representation width="480" height="270" codecs="avc1.4d4028" id="avc1_775000=3909683201" bandwidth="775000"/>
+    </AdaptationSet>
+    <AdaptationSet mimeType="audio/mp4" id="1" group="1" lang="en" contentType="audio" segmentAlignment="true">
+      <ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc" cenc:default_KID="6561801b-75ab-2581-9fc7-ede365375df7"/>
+      <ContentProtection schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95" value="Microsoft PlayReady"/>
+      <ContentProtection schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed" value="Widevine Content Protection"/>
+      <Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"/>
+      <SegmentTemplate timescale="48000" media="LIFETIME-HD-\( RepresentationID \)-scale=48000-p=\( Period.id \)-\( Time \).mp4" initialization="LIFETIME-HD-\( RepresentationID \)-scale=48000-p=\( Period.id \)-init.mp4"/>
+      <Representation audioSamplingRate="48000" codecs="mp4a.40.2" id="mp4a_128000_eng=1377950272" bandwidth="128000">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet mimeType="audio/mp4" id="2" group="1" lang="es" contentType="audio" segmentAlignment="true">
+      <ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc" cenc:default_KID="6561801b-75ab-2581-9fc7-ede365375df7"/>
+      <ContentProtection schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95" value="Microsoft PlayReady"/>
+      <ContentProtection schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed" value="Widevine Content Protection"/>
+      <Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"/>
+      <SegmentTemplate timescale="48000" media="IZZI-TV-\( RepresentationID \)-scale=48000-p=\( Period.id \)-\( Time \).mp4" initialization="IZZI-TV-\( RepresentationID \)-scale=48000-p=\( Period.id \)-init.mp4"/>
+      <Representation audioSamplingRate="48000" codecs="mp4a.40.2" id="mp4a_128000_spa=147899528" bandwidth="128000">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/>
+      </Representation>
+    </AdaptationSet>
+  </Period>
+  <UTCTiming schemeIdUri="urn:mpeg:dash:utc:http-iso:2014" value="https://time.akamai.com/?iso&amp;ms"/>
+</MPD>
