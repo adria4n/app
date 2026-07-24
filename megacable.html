@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.16.3/shaka-player.compiled.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        video {
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+
+<video id="video" autoplay controls playsinline></video>
+
+<script>
+shaka.polyfill.installAll();
+
+const video = document.getElementById("video");
+const player = new shaka.Player(video);
+
+player.configure({
+    drm: {
+        clearKeys: {
+            "8170634d3c8b4e5a88f6bb2c2944f7ee": "4c75c828e315a7d9d78da6170af847a3"
+        }
+    }
+});
+
+const manifestUri = new URLSearchParams(window.location.search).get("url");
+
+if (manifestUri) {
+    player.load(manifestUri).then(() => {
+        video.volume = 1;
+        video.muted = false;
+    }).catch(console.error);
+}
+
+window.addEventListener("beforeunload", () => {
+    player.destroy();
+});
+</script>
+
+</body>
+</html>
